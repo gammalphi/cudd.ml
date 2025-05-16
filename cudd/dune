@@ -1,0 +1,22 @@
+(rule
+ (targets cudd.tar.gz)
+ (action
+  (bash
+   "curl -L https://github.com/ivmai/cudd/archive/refs/tags/cudd-3.0.0.tar.gz -o cudd.tar.gz")))
+
+(rule
+ (targets cudd.h libcudd.a libcudd.custom.a)
+ (deps cudd.tar.gz)
+ (action
+  (progn
+   (bash "rm -rf unpacked-cudd && mkdir unpacked-cudd")
+   (bash "tar -xf %{deps} --strip-components=1 -C unpacked-cudd")
+   (bash "cp unpacked-cudd/cudd/cudd.h cudd.h")
+   (chdir unpacked-cudd
+    (bash "CFLAGS=\"-O3 -fPIC\" CXXFLAGS=\"-O3 -fPIC\" ./configure --enable-obj --enable-shared --disable-dependency-tracking --disable-dddmp"))
+   (chdir unpacked-cudd
+	  (bash "LIBTOOL=\"libtool -prefer-pic\" make cudd/libcudd.la"))
+   (bash "ar cr libcudd.custom.a unpacked-cudd/cudd/.libs/*.o libcudd.custom.a && ranlib libcudd.custom.a")
+   (bash "cp unpacked-cudd/cudd/.libs/libcudd.a libcudd.a")
+   ;(bash "cp libcudd.custom.a libcudd.a")
+   )))
