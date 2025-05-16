@@ -20,3 +20,4 @@ build: [
     "@doc" {with-doc}
   ]
 ]
+dev-repo: "https://github.com/ivmai/cudd/archive/refs/tags/cudd-3.0.0.tar.gz"

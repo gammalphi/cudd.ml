@@ -2,6 +2,8 @@
 
 (name cudd)
 
+(source (uri "https://github.com/ivmai/cudd/archive/refs/tags/cudd-3.0.0.tar.gz"))
+
 (using directory-targets 0.1)
 
 (generate_opam_files true)
