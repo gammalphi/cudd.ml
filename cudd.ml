@@ -8,6 +8,6 @@ external bdd_var : int -> bdd = "caml_cudd_bdd_var"
 external bdd_and : bdd -> bdd -> bdd = "caml_cudd_bdd_and"
 external bdd_or : bdd -> bdd -> bdd = "caml_cudd_bdd_or"
 external bdd_not : bdd -> bdd = "caml_cudd_bdd_not"
-external bdd_equal : bdd -> bdd -> bool = "caml_cudd_bdd_equal"  
+external bdd_equal : bdd -> bdd -> bool = "caml_cudd_bdd_equal"  [@@noalloc]
 
 let () = at_exit quit
