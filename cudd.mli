@@ -8,6 +8,8 @@ val bdd_not : bdd -> bdd
 val bdd_and : bdd -> bdd -> bdd
 val bdd_or : bdd -> bdd -> bdd
 val bdd_var : int -> bdd
-val bdd_equal : bdd -> bdd -> bool
-(* val bdd_is_inter_empty : bdd -> bdd -> bool *)
-
+val bdd_is_equal : bdd -> bdd -> bool
+val bdd_is_false : bdd -> bool
+val bdd_is_true : bdd -> bool
+val bdd_is_inter_empty : bdd -> bdd -> bool
+val bdd_is_included_in : bdd -> bdd -> bool

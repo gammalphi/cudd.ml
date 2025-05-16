@@ -112,7 +112,7 @@ CAMLprim value caml_cudd_bdd_not(value vbdd) {
   CAMLreturn(alloc_bdd(res));
 }
 
-CAMLprim value caml_cudd_bdd_equal(value vbdd1, value vbdd2) {
+CAMLprim value caml_cudd_bdd_is_equal(value vbdd1, value vbdd2) {
   CAMLparam2(vbdd1, vbdd2);
   bdd_t b1 = Bdd_val(vbdd1);
   bdd_t b2 = Bdd_val(vbdd2);
@@ -120,3 +120,10 @@ CAMLprim value caml_cudd_bdd_equal(value vbdd1, value vbdd2) {
   CAMLreturn(Val_int(res));
 }
 
+CAMLprim value caml_cudd_bdd_leq(value vbdd1, value vbdd2) {
+  CAMLparam2(vbdd1,vbdd2);
+  bdd_t b1 = Bdd_val(vbdd1);
+  bdd_t b2 = Bdd_val(vbdd2);
+  int res = Cudd_bddLeq(manager,b1,b2);
+  CAMLreturn(Val_int(res));
+}
