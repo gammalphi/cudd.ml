@@ -1,8 +1,10 @@
-(rule
- (targets cudd.tar.gz)
- (action
-  (bash
-   "curl -L https://github.com/ivmai/cudd/archive/refs/tags/cudd-3.0.0.tar.gz -o cudd.tar.gz")))
+; (rule
+;  (targets cudd.tar.gz)
+;  (action
+;   (bash
+;    "curl -L https://github.com/ivmai/cudd/archive/refs/tags/cudd-3.0.0.tar.gz -o cudd.tar.gz")))
+
+
 
 (rule
  (targets cudd.h libcudd.a dllcudd.so)
