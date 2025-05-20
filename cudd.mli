@@ -1,4 +1,5 @@
 type bdd
+type 'a bdd_result = Bool of bool | Ifte of int * bdd * bdd
 
 val init : unit -> unit
 val quit : unit -> unit
