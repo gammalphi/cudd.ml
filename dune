@@ -5,7 +5,6 @@
   (language c)
   (names cudd_stubs)
   (flags
-   (:standard -Wall))
-  (include_dirs cudd))
- (foreign_archives cudd/cudd)
+   (:standard -Wall)))
+ (c_library_flags -lcudd)
  (libraries unix))
