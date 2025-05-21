@@ -1,6 +1,6 @@
-module Init () : sig
+module Bdd () : sig
   type t
-  type 'a bdd_result = Bool of bool | Ifte of int * t * t
+  type 'a result = Bool of bool | Ifte of int * t * t
 
   (* val init : unit -> unit *)
   val quit : unit -> unit

@@ -1,4 +1,4 @@
-module C = Cudd.Init ()
+module C = Cudd.Bdd ()
 
 let () =
   let x = C.bdd_var 0 in

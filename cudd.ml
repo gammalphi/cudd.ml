@@ -15,12 +15,12 @@ external bdd_is_equal : bdd -> bdd -> bool = "caml_cudd_bdd_is_equal"
 
 external bdd_is_included_in : bdd -> bdd -> bool = "caml_cudd_bdd_leq"
 
-module Init () = struct
+module Bdd () = struct
   type t = bdd
 
   let man = init ()
 
-  type 'a bdd_result = Bool of bool | Ifte of int * t * t
+  type 'a result = Bool of bool | Ifte of int * t * t
 
   let quit () = quit man
   let bdd_true () = bdd_true man
