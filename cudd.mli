@@ -1,24 +1,24 @@
+type bdd
+
 module Bdd () : sig
-  type t
-  type  result = Bool of bool | Ifte of int * t * t
+  type result = Bool of bool | Ifte of int * bdd * bdd
 
   (* val init : unit -> unit *)
   val quit : unit -> unit
-  val bdd_true : unit -> t
-  val bdd_false : unit -> t
-  val bdd_not : t -> t
-  val bdd_and : t -> t -> t
-  val bdd_or : t -> t -> t
-  val bdd_var : int -> t
-  val bdd_newvar : unit -> t
-  val bdd_is_equal : t -> t -> bool
-  val bdd_is_false : t -> bool
-  val bdd_is_true : t -> bool
-  val bdd_is_inter_empty : t -> t -> bool
-  val bdd_is_included_in : t -> t -> bool
-
-  val bdd_inspect : t ->  result
+  val bdd_true : unit -> bdd
+  val bdd_false : unit -> bdd
+  val bdd_not : bdd -> bdd
+  val bdd_and : bdd -> bdd -> bdd
+  val bdd_or : bdd -> bdd -> bdd
+  val bdd_var : int -> bdd
+  val bdd_newvar : unit -> bdd
+  val bdd_is_equal : bdd -> bdd -> bool
+  val bdd_is_false : bdd -> bool
+  val bdd_is_true : bdd -> bool
+  val bdd_is_inter_empty : bdd -> bdd -> bool
+  val bdd_is_included_in : bdd -> bdd -> bool
+  val bdd_inspect : bdd -> result
 
   val bdd_print :
-    (Format.formatter -> int -> unit) -> Format.formatter -> t -> unit
+    (Format.formatter -> int -> unit) -> Format.formatter -> bdd -> unit
 end
