@@ -6,7 +6,8 @@
 
 (using directory-targets 0.1)
 
-(generate_opam_files true)
+; it overrides the build options...
+; (generate_opam_files true)
 
 (maintainers "Toto <toto@toto.toto>")
 

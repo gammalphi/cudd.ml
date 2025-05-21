@@ -1,10 +1,4 @@
 (rule
- (target cudd.tar.gz)
- (deps cudd-3.0.0.tar.gz)
- (action
-  (bash "mv %{deps} %{target}")))
-
-(rule
  (targets cudd.h libcudd.a dllcudd.so)
  (deps cudd.tar.gz)
  (action
