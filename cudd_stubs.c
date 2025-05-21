@@ -3,6 +3,7 @@
 #include "caml/custom.h"
 #include "caml/fail.h"
 #include "caml/memory.h"
+// #include "cudd/cudd.h"
 #include <cudd.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -11,7 +12,7 @@
    possibility is to use a generative functor, where each call would
    create a distinct manager, and where it is impossible to use
    variables of different managers. */
-static DdManager *manager = NULL;
+// static DdManager *manager = NULL;
 
 typedef DdNode *bdd_t;
 
@@ -23,7 +24,7 @@ struct bdd_wrapper {
 #define Bddwrapper_val(v) ((struct bdd_wrapper *)Data_custom_val(v))
 #define Bdd_val(v) (Bddwrapper_val(v)->ptr)
 
-static void bdd_finalize(value v) {
+static void bdd_finalize(DdManager *manager, value v) {
   struct bdd_wrapper *w = Bddwrapper_val(v);
   if (w->ptr != NULL) {
     Cudd_RecursiveDeref(manager, w->ptr);
@@ -31,22 +32,18 @@ static void bdd_finalize(value v) {
   }
 }
 
-static struct custom_operations bdd_ops = {"cudd.bdd",
-                                           bdd_finalize,
-                                           custom_compare_default,
-                                           custom_hash_default,
-                                           custom_serialize_default,
-                                           custom_deserialize_default};
+static struct custom_operations bdd_ops = {
+    "cudd.bdd",
+    // bdd_finalize,
+    custom_compare_default, custom_hash_default, custom_serialize_default,
+    custom_deserialize_default};
 
-CAMLprim value caml_cudd_init(value unit) {
+struct DdManager *caml_cudd_init(value unit) {
   CAMLparam1(unit);
-  if (manager == NULL) {
-    manager = Cudd_Init(0, 0, CUDD_UNIQUE_SLOTS, CUDD_CACHE_SLOTS, 0);
-  }
-  CAMLreturn(Val_unit);
+  return (Cudd_Init(0, 0, CUDD_UNIQUE_SLOTS, CUDD_CACHE_SLOTS, 0));
 }
 
-CAMLprim value caml_cudd_quit(value unit) {
+CAMLprim value caml_cudd_quit(DdManager *manager, value unit) {
   CAMLparam1(unit);
   if (manager != NULL) {
     Cudd_Quit(manager);
@@ -62,21 +59,21 @@ static value alloc_bdd(bdd_t node) {
   return block;
 }
 
-CAMLprim value caml_cudd_bdd_true(value unit) {
+CAMLprim value caml_cudd_bdd_true(DdManager *manager, value unit) {
   CAMLparam1(unit);
   bdd_t node = Cudd_ReadOne(manager);
   Cudd_Ref(node);
   CAMLreturn(alloc_bdd(node));
 }
 
-CAMLprim value caml_cudd_bdd_false(value unit) {
+CAMLprim value caml_cudd_bdd_false(DdManager *manager, value unit) {
   CAMLparam1(unit);
   bdd_t node = Cudd_ReadLogicZero(manager);
   Cudd_Ref(node);
   CAMLreturn(alloc_bdd(node));
 }
 
-CAMLprim value caml_cudd_bdd_var(value vidx) {
+CAMLprim value caml_cudd_bdd_var(DdManager *manager, value vidx) {
   CAMLparam1(vidx);
   int idx = Int_val(vidx);
   bdd_t node = Cudd_bddIthVar(manager, idx);
@@ -84,7 +81,7 @@ CAMLprim value caml_cudd_bdd_var(value vidx) {
   CAMLreturn(alloc_bdd(node));
 }
 
-CAMLprim value caml_cudd_bdd_and(value vbdd1, value vbdd2) {
+CAMLprim value caml_cudd_bdd_and(DdManager *manager, value vbdd1, value vbdd2) {
   CAMLparam2(vbdd1, vbdd2);
   bdd_t b1 = Bdd_val(vbdd1);
   bdd_t b2 = Bdd_val(vbdd2);
@@ -93,7 +90,7 @@ CAMLprim value caml_cudd_bdd_and(value vbdd1, value vbdd2) {
   CAMLreturn(alloc_bdd(res));
 }
 
-CAMLprim value caml_cudd_bdd_or(value vbdd1, value vbdd2) {
+CAMLprim value caml_cudd_bdd_or(DdManager *manager, value vbdd1, value vbdd2) {
   CAMLparam2(vbdd1, vbdd2);
   bdd_t b1 = Bdd_val(vbdd1);
   bdd_t b2 = Bdd_val(vbdd2);
@@ -102,7 +99,7 @@ CAMLprim value caml_cudd_bdd_or(value vbdd1, value vbdd2) {
   CAMLreturn(alloc_bdd(res));
 }
 
-CAMLprim value caml_cudd_bdd_not(value vbdd) {
+CAMLprim value caml_cudd_bdd_not(DdManager *manager, value vbdd) {
   CAMLparam1(vbdd);
   bdd_t b = Bdd_val(vbdd);
   bdd_t res = Cudd_Not(b);
@@ -110,7 +107,8 @@ CAMLprim value caml_cudd_bdd_not(value vbdd) {
   CAMLreturn(alloc_bdd(res));
 }
 
-CAMLprim value caml_cudd_bdd_is_equal(value vbdd1, value vbdd2) {
+CAMLprim value caml_cudd_bdd_is_equal(DdManager *manager, value vbdd1,
+                                      value vbdd2) {
   CAMLparam2(vbdd1, vbdd2);
   bdd_t b1 = Bdd_val(vbdd1);
   bdd_t b2 = Bdd_val(vbdd2);
@@ -118,7 +116,7 @@ CAMLprim value caml_cudd_bdd_is_equal(value vbdd1, value vbdd2) {
   CAMLreturn(Val_int(res));
 }
 
-CAMLprim value caml_cudd_bdd_leq(value vbdd1, value vbdd2) {
+CAMLprim value caml_cudd_bdd_leq(DdManager *manager, value vbdd1, value vbdd2) {
   CAMLparam2(vbdd1, vbdd2);
   bdd_t b1 = Bdd_val(vbdd1);
   bdd_t b2 = Bdd_val(vbdd2);
@@ -126,7 +124,7 @@ CAMLprim value caml_cudd_bdd_leq(value vbdd1, value vbdd2) {
   CAMLreturn(Val_int(res));
 }
 
-CAMLprim value caml_cudd_bdd_inspect(value vbdd) {
+CAMLprim value caml_cudd_bdd_inspect(DdManager *manager, value vbdd) {
   CAMLparam1(vbdd);
   CAMLlocal3(vres, vthen, velse);
   bdd_t v = Bdd_val(vbdd);
