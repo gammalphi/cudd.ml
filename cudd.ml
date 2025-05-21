@@ -26,28 +26,28 @@ module Bdd () = struct
 
   let man = init ()
   let quit () = quit man
-  let bdd_true () = bdd_true man
-  let bdd_false () = bdd_false man
-  let bdd_not = bdd_not man
-  let bdd_and = bdd_and man
-  let bdd_or = bdd_or man
-  let bdd_var = bdd_var man
-  let bdd_newvar () = bdd_newvar man
-  let bdd_is_equal = bdd_is_equal
-  let bdd_is_included_in = bdd_leq man
-  let bdd_inspect = bdd_inspect man
+  let true_ () = bdd_true man
+  let false_ () = bdd_false man
+  let not_ = bdd_not man
+  let and_ = bdd_and man
+  let or_ = bdd_or man
+  let var = bdd_var man
+  let newvar () = bdd_newvar man
+  let is_equal = bdd_is_equal
+  let is_included_in = bdd_leq man
+  let inspect = bdd_inspect man
 
   (*TODO: do this properly*)
-  let bdd_is_true b = bdd_is_equal b (bdd_true ())
-  let bdd_is_false b = bdd_is_equal b (bdd_false ())
-  let bdd_is_inter_empty b1 b2 = bdd_is_included_in b1 (bdd_not b2)
+  let is_true b = bdd_is_equal b (true_ ())
+  let is_false b = bdd_is_equal b (false_ ())
+  let is_inter_empty b1 b2 = is_included_in b1 (not_ b2)
 
-  let rec bdd_print print_id fmt b =
-    match bdd_inspect b with
+  let rec print print_id fmt b =
+    match inspect b with
     | Bool _ -> ()
     | Ifte (x, b1, b2) ->
         Format.fprintf fmt "ITE(@[<hv>%a;@,%a;@,%a)@])" print_id x
-          (bdd_print print_id) b1 (bdd_print print_id) b2
+          (print print_id) b1 (print print_id) b2
 
   let () = at_exit quit
 end

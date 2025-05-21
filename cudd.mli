@@ -5,20 +5,20 @@ module Bdd () : sig
 
   (* val init : unit -> unit *)
   val quit : unit -> unit
-  val bdd_true : unit -> bdd
-  val bdd_false : unit -> bdd
-  val bdd_not : bdd -> bdd
-  val bdd_and : bdd -> bdd -> bdd
-  val bdd_or : bdd -> bdd -> bdd
-  val bdd_var : int -> bdd
-  val bdd_newvar : unit -> bdd
-  val bdd_is_equal : bdd -> bdd -> bool
-  val bdd_is_false : bdd -> bool
-  val bdd_is_true : bdd -> bool
-  val bdd_is_inter_empty : bdd -> bdd -> bool
-  val bdd_is_included_in : bdd -> bdd -> bool
-  val bdd_inspect : bdd -> result
+  val true_ : unit -> bdd
+  val false_ : unit -> bdd
+  val not_ : bdd -> bdd
+  val and_ : bdd -> bdd -> bdd
+  val or_ : bdd -> bdd -> bdd
+  val var : int -> bdd
+  val newvar : unit -> bdd
+  val is_equal : bdd -> bdd -> bool
+  val is_false : bdd -> bool
+  val is_true : bdd -> bool
+  val is_inter_empty : bdd -> bdd -> bool
+  val is_included_in : bdd -> bdd -> bool
+  val inspect : bdd -> result
 
-  val bdd_print :
+  val print :
     (Format.formatter -> int -> unit) -> Format.formatter -> bdd -> unit
 end
