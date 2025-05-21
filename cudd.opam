@@ -7,7 +7,6 @@ depends: [
   "odoc" {with-doc}
 ]
 build: [
-  ["sh" "get_cudd.sh"]
   ["dune" "subst"] {dev}
   [
     "dune"

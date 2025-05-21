@@ -7,9 +7,10 @@
 (using directory-targets 0.1)
 
 ; it overrides the build options...
-; (generate_opam_files true)
+(generate_opam_files true)
 
 (maintainers "Toto <toto@toto.toto>")
+
 
 (package
  (name cudd)
