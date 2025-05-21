@@ -1,8 +1,8 @@
-#include <caml/alloc.h>
-#include <caml/custom.h>
-#include <caml/fail.h>
-#include <caml/memory.h>
-#include <caml/mlvalues.h>
+#include "caml/alloc.h"
+#include "caml/callback.h"
+#include "caml/custom.h"
+#include "caml/fail.h"
+#include "caml/memory.h"
 #include <cudd.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -143,8 +143,8 @@ CAMLprim value caml_cudd_bdd_inspect(value vbdd) {
     int i = Cudd_NodeReadIndex(v);
     vres = caml_alloc_small(3, 1);
     Field(vres, 0) = Val_int(i);
-    Field(vres, 1) = th;
-    Field(vres, 2) = el;
+    Field(vres, 1) = alloc_bdd(th);
+    Field(vres, 2) = alloc_bdd(el);
   }
-  CAMLreturn(vres)
+  CAMLreturn(vres);
 }
