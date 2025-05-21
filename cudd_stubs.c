@@ -80,6 +80,12 @@ CAMLprim value caml_cudd_bdd_var(DdManager *manager, value vidx) {
   Cudd_Ref(node);
   CAMLreturn(alloc_bdd(node));
 }
+CAMLprim value caml_cudd_bdd_newvar(DdManager *manager, value unit) {
+  CAMLparam1(unit);
+  bdd_t node = Cudd_bddNewVar(manager);
+  Cudd_Ref(node);
+  CAMLreturn(alloc_bdd(node));
+}
 
 CAMLprim value caml_cudd_bdd_and(DdManager *manager, value vbdd1, value vbdd2) {
   CAMLparam2(vbdd1, vbdd2);
@@ -145,4 +151,14 @@ CAMLprim value caml_cudd_bdd_inspect(DdManager *manager, value vbdd) {
     Field(vres, 2) = alloc_bdd(el);
   }
   CAMLreturn(vres);
+}
+
+
+CAMLprim value caml_cudd_print(DdManager *manager,value v){
+  CAMLparam1(v);
+  bdd_t b = Bdd_val(b);
+  fflush(stdout);
+  Cudd_PrintMinterm(manager,b);
+  fflush(stdout);
+  CAMLreturn(Val_unit);
 }
