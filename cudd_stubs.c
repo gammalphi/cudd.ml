@@ -113,8 +113,7 @@ CAMLprim value caml_cudd_bdd_not(DdManager *manager, value vbdd) {
   CAMLreturn(alloc_bdd(res));
 }
 
-CAMLprim value caml_cudd_bdd_is_equal(DdManager *manager, value vbdd1,
-                                      value vbdd2) {
+CAMLprim value caml_cudd_bdd_is_equal(value vbdd1, value vbdd2) {
   CAMLparam2(vbdd1, vbdd2);
   bdd_t b1 = Bdd_val(vbdd1);
   bdd_t b2 = Bdd_val(vbdd2);
@@ -153,12 +152,11 @@ CAMLprim value caml_cudd_bdd_inspect(DdManager *manager, value vbdd) {
   CAMLreturn(vres);
 }
 
-
-CAMLprim value caml_cudd_print(DdManager *manager,value v){
+CAMLprim value caml_cudd_print(DdManager *manager, value v) {
   CAMLparam1(v);
   bdd_t b = Bdd_val(b);
   fflush(stdout);
-  Cudd_PrintMinterm(manager,b);
+  Cudd_PrintMinterm(manager, b);
   fflush(stdout);
   CAMLreturn(Val_unit);
 }
