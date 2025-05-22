@@ -11,17 +11,15 @@
 
 #include <assert.h>
 
-
-/* This assume a single static manager. Maybe we should not.  A
-   possibility is to use a generative functor, where each call would
-   create a distinct manager, and where it is impossible to use
-   variables of different managers. */
-// static DdManager *manager = NULL;
-
 typedef DdNode* bdd_t;
 typedef DdManager* manager_t;
 
-/* Do we need this wrapper? Not sure. */
+/* Note: We need to reference the manager because of the finalisation
+   function. However, it is probably quite rare to use a lot of
+   managers at the same time. Thus, it should be possible to use
+   unused bits in bdd_t as an index to a static array of managers
+   instead, with a fixed size. This would reduce the size of
+   references to bdd objects.  */
 struct bdd_wrapper {
   bdd_t ptr;
   manager_t manager;
