@@ -1,3 +1,7 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <cudd.h>
+
 #include "caml/alloc.h"
 #include "caml/callback.h"
 #include "caml/custom.h"
@@ -7,10 +11,6 @@
 
 #include <assert.h>
 
-// #include "cudd/cudd.h"
-#include <cudd.h>
-#include <stdio.h>
-#include <stdlib.h>
 
 /* This assume a single static manager. Maybe we should not.  A
    possibility is to use a generative functor, where each call would
