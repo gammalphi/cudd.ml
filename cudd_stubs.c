@@ -109,6 +109,7 @@ CAMLprim value caml_cudd_bdd_newvar(value man) {
 }
 
 
+/* Factorize functions of type bdd -> bdd -> bdd  */
 #define ar2_bdd_bdd_bdd(name) \
   CAMLprim value caml_##name(value man, value vbdd1, value vbdd2) {	\
   CAMLparam3(man,vbdd1, vbdd2);						\
