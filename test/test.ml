@@ -10,7 +10,12 @@ let test1() =
   let y_or_x = C.or_ y x in
   assert (C.is_equal not_not_x_and_not_y y_or_x);
   assert (not @@ C.is_equal not_x_and_not_y y_or_x);
-  assert (C.is_equal x (C.or_ (C.and_ x not_y) (C.and_ x y)));;
+  assert (C.is_equal x (C.or_ (C.and_ x not_y) (C.and_ x y)));
+  Format.printf "x=%a@\ny=%a@\ny_or_x=%a@."
+    (C.print Format.pp_print_int) x
+    (C.print Format.pp_print_int) y
+    (C.print Format.pp_print_int) y_or_x
+;;
 
 
 
