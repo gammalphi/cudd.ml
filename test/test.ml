@@ -11,4 +11,8 @@ let () =
   assert (C.is_equal not_not_x_and_not_y y_or_x);
   assert (not @@ C.is_equal not_x_and_not_y y_or_x);
   assert (C.is_equal x (C.or_ (C.and_ x not_y) (C.and_ x y)));
+  for _ = 0 to 100000 do
+    let _ = C.not_ x in
+    ()
+  done;
   Printf.printf "All tests done.\n"
