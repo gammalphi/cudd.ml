@@ -11,7 +11,7 @@
  (action
   (progn
      (bash "rm -rf unpacked-cudd && mkdir unpacked-cudd")
-     (bash "find . -name cudd.tar.gz 1>&2 && exit 1")
+     (bash "find . -name cudd.tar.gz")
    (bash "tar -xf cudd.tar.gz --strip-components=1 -C unpacked-cudd")
    (bash "cp unpacked-cudd/cudd/cudd.h cudd.h")
    (chdir unpacked-cudd
