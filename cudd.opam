@@ -21,3 +21,11 @@ build: [
   ]
 ]
 dev-repo: "https://github.com/ivmai/cudd/archive/refs/tags/cudd-3.0.0.tar.gz"
+extra-source "cudd/cudd.tar.gz" {
+  src:
+    "https://github.com/ivmai/cudd/archive/refs/tags/cudd-3.0.0.tar.gz"
+  checksum: [
+    "sha256=5fe145041c594689e6e7cf4cd623d5f2b7c36261708be8c9a72aed72cf67acce"
+    "md5=edca9c69528256ca8ae37be9cedef73f"
+  ]
+}
