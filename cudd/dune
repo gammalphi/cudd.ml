@@ -1,13 +1,14 @@
-; (rule
-;    (targets cudd.tar.gz)
-;    (mode fallback)
-;    (action
-;       (bash
-;          "curl -L https://github.com/ivmai/cudd/archive/refs/tags/cudd-3.0.0.tar.gz -o cudd.tar.gz")))
+;; If installed with opam, this file will already be here. 
+(rule
+    (targets cudd.tar.gz)
+    (mode fallback)
+    (action
+       (bash
+          "curl -L https://github.com/ivmai/cudd/archive/refs/tags/cudd-3.0.0.tar.gz -o cudd.tar.gz")))
 
 (rule
  (targets cudd.h libcudd.a dllcudd.so)
-; (deps cudd.tar.gz)
+ (deps cudd.tar.gz)
  (action
   (progn
      (bash "rm -rf unpacked-cudd && mkdir unpacked-cudd")
