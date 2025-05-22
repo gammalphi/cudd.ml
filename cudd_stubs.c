@@ -108,25 +108,20 @@ CAMLprim value caml_cudd_bdd_newvar(value man) {
   CAMLreturn(alloc_bdd(manager,node));
 }
 
-CAMLprim value caml_cudd_bdd_and(value man, value vbdd1, value vbdd2) {
-  CAMLparam3(man,vbdd1, vbdd2);
-  manager_t manager = manager_Val(man);
-  bdd_t b1 = Bdd_val(vbdd1);
-  bdd_t b2 = Bdd_val(vbdd2);
-  bdd_t res = Cudd_bddAnd(manager, b1, b2);
-  Cudd_Ref(res);
-  CAMLreturn(alloc_bdd(manager,res));
+
+#define ar2_bdd_bdd_bdd(name) \
+  CAMLprim value caml_##name(value man, value vbdd1, value vbdd2) {	\
+  CAMLparam3(man,vbdd1, vbdd2);						\
+  manager_t manager = manager_Val(man);					\
+  bdd_t b1 = Bdd_val(vbdd1);						\
+  bdd_t b2 = Bdd_val(vbdd2);						\
+  bdd_t res = name(manager, b1, b2);					\
+  Cudd_Ref(res);							\
+  CAMLreturn(alloc_bdd(manager,res));					\
 }
 
-CAMLprim value caml_cudd_bdd_or(value man, value vbdd1, value vbdd2) {
-  CAMLparam3(man,vbdd1, vbdd2);
-  manager_t manager = manager_Val(man);
-  bdd_t b1 = Bdd_val(vbdd1);
-  bdd_t b2 = Bdd_val(vbdd2);
-  bdd_t res = Cudd_bddOr(manager, b1, b2);
-  Cudd_Ref(res);
-  CAMLreturn(alloc_bdd(manager,res));
-}
+ar2_bdd_bdd_bdd(Cudd_bddAnd)
+ar2_bdd_bdd_bdd(Cudd_bddOr)     
 
 CAMLprim value caml_cudd_bdd_not(value man, value vbdd) {
   CAMLparam2(man,vbdd);
