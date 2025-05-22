@@ -1,3 +1,3 @@
 (lang dune 3.6)
 (name cudd)
-(generate_opam_files false)
+(generate_opam_files true)
