@@ -1,7 +1,7 @@
 type bdd
 
 module Bdd () : sig
-  type result = Bool of bool | Ifte of int * bdd * bdd
+  type result = False | True | Ifte of int * bdd * bdd
 
   (* val init : unit -> unit *)
   val quit : unit -> unit

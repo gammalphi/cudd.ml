@@ -20,7 +20,7 @@ external bdd_leq : man -> bdd -> bdd -> bool = "caml_cudd_bdd_not" [@@noalloc]
 
 module Bdd () = struct
   type t = bdd
-  type result = Bool of bool | Ifte of int * t * t
+  type result = False | True | Ifte of int * t * t
 
   external bdd_inspect : man -> bdd -> result = "caml_cudd_bdd_inspect"
 
@@ -44,7 +44,8 @@ module Bdd () = struct
 
   let rec print print_id fmt b =
     match inspect b with
-    | Bool _ -> ()
+    | True -> Format.fprintf fmt "true"
+    | False -> Format.fprintf fmt "false"
     | Ifte (x, b1, b2) ->
         Format.fprintf fmt "ITE(@[<hv>%a;@,%a;@,%a)@])" print_id x
           (print print_id) b1 (print print_id) b2

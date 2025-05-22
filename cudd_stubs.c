@@ -109,7 +109,7 @@ CAMLprim value caml_cudd_bdd_newvar(value man) {
 }
 
 
-/* Factorize functions of type bdd -> bdd -> bdd  */
+/* Factorise functions of type bdd -> bdd -> bdd  */
 #define ar2_bdd_bdd_bdd(name) \
   CAMLprim value caml_##name(value man, value vbdd1, value vbdd2) {	\
   CAMLparam3(man,vbdd1, vbdd2);						\
@@ -156,15 +156,14 @@ CAMLprim value caml_cudd_bdd_inspect(value man, value vbdd) {
   CAMLlocal3(vres, vthen, velse);
   bdd_t v = Bdd_val(vbdd);
   if (Cudd_IsConstant(v)) {
-    vres = caml_alloc_small(1, 0);
     if (v == Cudd_ReadOne(manager)) {
-      Field(vres, 0) = Val_true;
+      vres = Val_true;
     } else
-      Field(vres, 0) = Val_false;
+      vres = Val_false;
   } else {
     bdd_t th, el;
     th = Cudd_T(v);
-    el = Cudd_T(v);
+    el = Cudd_E(v);
     int i = Cudd_NodeReadIndex(v);
     vres = caml_alloc_small(3, 1);
     Field(vres, 0) = Val_int(i);
