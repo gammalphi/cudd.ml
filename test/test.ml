@@ -15,4 +15,9 @@ let () =
     let _ = C.not_ x in
     ()
   done;
+
+  let x =
+    List.init 1000 (fun _ -> C.newvar ()) |> List.fold_left C.and_ (C.newvar ())
+  in
+  let _ = C.not_ x in
   Printf.printf "All tests done.\n"
