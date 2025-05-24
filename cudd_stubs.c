@@ -42,6 +42,7 @@ static void bdd_finalize(value v) {
   struct bdd_wrapper *w = Bddwrapper_val(v);
   assert(w->ptr != NULL);
   Cudd_RecursiveDeref(w->manager, w->ptr);
+  Cudd_CheckZeroRef(w->manager);
   w->ptr = NULL;		/* For debugging only. */
 }
 

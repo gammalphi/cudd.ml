@@ -49,6 +49,7 @@ let test4 () =
   let a = l |> List.fold_left C.and_ (C.true_ ()) |> C.not_
   and b = l |> List.fold_left (fun s x -> C.or_ s (C.not_ x)) (C.false_ ()) in
   assert (C.is_equal a b);
+  assert (evaluate a == evaluate b);
   (* ignore @@ evaluate @@ C.not_ x; *)
   Format.printf "\nTEST4 OK\n%!"
 
