@@ -1,6 +1,6 @@
 module C = Cudd.Bdd ()
 
-let test1() =   
+let test1 () =
   let x = C.var 0 in
   let y = C.var 1 in
   let not_x = C.not_ x in
@@ -12,31 +12,34 @@ let test1() =
   assert (not @@ C.is_equal not_x_and_not_y y_or_x);
   assert (C.is_equal x (C.or_ (C.and_ x not_y) (C.and_ x y)));
   Format.printf "x=%a@\ny=%a@\ny_or_x=%a@."
-    (C.print Format.pp_print_int) x
-    (C.print Format.pp_print_int) y
-    (C.print Format.pp_print_int) y_or_x
-;;
+    (C.print Format.pp_print_int)
+    x
+    (C.print Format.pp_print_int)
+    y
+    (C.print Format.pp_print_int)
+    y_or_x
 
+let rec evaluate bdd =
+  match C.inspect bdd with
+  | C.True -> true
+  | C.False -> false
+  | Ifte (_, x, y) -> evaluate x && evaluate y
 
-
-let test2() =
+let test2 () =
   let x = C.var 0 in
   for _ = 0 to 100000 do
     let _ = C.not_ x in
     ()
   done
-;;
 
-let test3() = 
+let test3 () =
   let x =
     List.init 1000 (fun _ -> C.newvar ()) |> List.fold_left C.and_ (C.newvar ())
   in
-  let _ = C.not_ x in
-  ()
-;;
+  ignore @@ evaluate @@ C.not_ x
 
 let () =
-  test1();
-  test2();
-  test3();
+  test1 ();
+  test2 ();
+  test3 ();
   Printf.printf "All tests done.\n"
