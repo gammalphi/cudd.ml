@@ -1,3 +1,5 @@
+[@@@warning "-32"]
+
 module C = Cudd.Bdd ()
 
 let test1 () =
@@ -17,7 +19,8 @@ let test1 () =
     (C.print Format.pp_print_int)
     y
     (C.print Format.pp_print_int)
-    y_or_x
+    y_or_x;
+  Format.printf "\nTEST1 OK\n%!"
 
 let rec evaluate bdd =
   match C.inspect bdd with
@@ -28,18 +31,26 @@ let rec evaluate bdd =
 let test2 () =
   let x = C.var 0 in
   for _ = 0 to 100000 do
-    let _ = C.not_ x in
-    ()
-  done
+    ignore @@ C.not_ x
+  done;
+  Format.printf "\nTEST2 OK\n%!"
 
 let test3 () =
   let x =
-    List.init 1000 (fun _ -> C.newvar ()) |> List.fold_left C.and_ (C.newvar ())
+    List.init 10000 (fun _ -> C.newvar ())
+    |> List.fold_left C.and_ (C.newvar ())
   in
-  ignore @@ evaluate @@ C.not_ x
+  ignore @@ evaluate @@ C.not_ x;
+  Format.printf "\nTEST3 OK\n%!"
+
+let test4 () =
+  let x = List.init 10000 C.var |> List.fold_left C.and_ (C.newvar ()) in
+  ignore @@ evaluate @@ C.not_ x;
+  Format.printf "\nTEST4 OK\n%!"
 
 let () =
   test1 ();
   test2 ();
   test3 ();
+  test4 ();
   Printf.printf "All tests done.\n"

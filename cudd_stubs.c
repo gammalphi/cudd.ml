@@ -164,6 +164,8 @@ CAMLprim value caml_cudd_bdd_inspect(value man, value vbdd) {
     bdd_t th, el;
     th = Cudd_T(v);
     el = Cudd_E(v);
+    Cudd_Ref(th);
+    Cudd_Ref(el);
     int i = Cudd_NodeReadIndex(v);
     vres = caml_alloc_small(3, 1);
     Field(vres, 0) = Val_int(i);

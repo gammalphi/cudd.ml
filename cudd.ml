@@ -33,8 +33,8 @@ module Bdd () = struct
   let not_ = bdd_not man
   let and_ = bdd_and man
   let or_ = bdd_or man
-  let var _ =  assert false
-  let newvar () = assert false
+  let var = bdd_var man
+  let newvar () = bdd_newvar man
   let is_equal = bdd_is_equal
   let is_included_in = bdd_leq man
   let inspect = bdd_inspect man
@@ -43,13 +43,14 @@ module Bdd () = struct
   let is_true b = bdd_is_equal b (true_ ())
   let is_false b = bdd_is_equal b (false_ ())
   let is_inter_empty b1 b2 = is_included_in b1 (not_ b2)
-  let rec print print_id fmt b = 
-  match inspect b with
-  | True -> Format.fprintf fmt "true"
-  | False -> Format.fprintf fmt "false"
-  | Ifte (x, b1, b2) ->
-      Format.fprintf fmt "ITE(@[<hv>%a;@,%a;@,%a)@])" print_id x
-        (print print_id) b1 (print print_id) b2
+
+  let rec print print_id fmt b =
+    match inspect b with
+    | True -> Format.fprintf fmt "true"
+    | False -> Format.fprintf fmt "false"
+    | Ifte (x, b1, b2) ->
+        Format.fprintf fmt "ITE(@[<hv>%a;@,%a;@,%a)@])" print_id x
+          (print print_id) b1 (print print_id) b2
 
   let () = at_exit quit
 end
