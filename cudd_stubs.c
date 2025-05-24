@@ -25,13 +25,33 @@ struct bdd_wrapper {
   manager_t manager;
 };
 
+
+struct manager_wrapper {
+  manager_t manager;
+};
+
+#define Manager_val(v) ((struct manager_wrapper *) Data_custom_val(v))->manager
 #define Bddwrapper_val(v) ((struct bdd_wrapper *)Data_custom_val(v))
 #define Bdd_val(v) (Bddwrapper_val(v)->ptr)
 
-static value Val_manager(manager_t manager) {
-  assert(((intptr_t) manager & 1) == 0);
-  return Val_long((intptr_t) manager >> 1);
+static void finalize_manager(value v) {
+  manager_t m = Manager_val(v);
+  Cudd_Quit(m);
 }
+
+static struct custom_operations manager_ops = {
+  "cudd.manager",
+  finalize_manager,
+  custom_compare_default, custom_hash_default,
+  custom_serialize_default, custom_deserialize_default
+};
+
+static value alloc_manager(manager_t m) {
+  value v = caml_alloc_custom(&manager_ops, sizeof(struct manager_wrapper), 0, 1);
+  ((struct manager_wrapper *) Data_custom_val(v))->manager = m;
+  return v;
+}
+
 
 static manager_t manager_Val(value v) {
   return (manager_t) (Long_val(v) << 1);
@@ -55,7 +75,7 @@ static struct custom_operations bdd_ops = {
 value caml_cudd_init(value unit) {
   CAMLparam1(unit);
   manager_t ret = Cudd_Init(0, 0, CUDD_UNIQUE_SLOTS, CUDD_CACHE_SLOTS, 0);
-  CAMLreturn(Val_manager(ret));
+  CAMLreturn(alloc_manager(ret));
 }
 
 CAMLprim value caml_cudd_quit(value man) {
