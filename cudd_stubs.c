@@ -156,6 +156,7 @@ CAMLprim value caml_cudd_bdd_inspect(value man, value vbdd) {
   CAMLlocal3(vres, vthen, velse);
   bdd_t v = Bdd_val(vbdd);
   if (Cudd_IsConstant(v)) {
+    vres = caml_alloc_small(1,0);
     if (v == Cudd_ReadOne(manager)) {
       vres = Val_true;
     } else

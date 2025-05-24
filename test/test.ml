@@ -41,11 +41,15 @@ let test3 () =
     |> List.fold_left C.and_ (C.newvar ())
   in
   ignore @@ evaluate @@ C.not_ x;
+  assert (C.is_equal x (C.not_ @@ C.not_ x));
   Format.printf "\nTEST3 OK\n%!"
 
 let test4 () =
-  let x = List.init 10000 C.var |> List.fold_left C.and_ (C.newvar ()) in
-  ignore @@ evaluate @@ C.not_ x;
+  let l = List.init 10000 C.var in
+  let a = l |> List.fold_left C.and_ (C.true_ ()) |> C.not_
+  and b = l |> List.fold_left (fun s x -> C.or_ s (C.not_ x)) (C.false_ ()) in
+  assert (C.is_equal a b);
+  (* ignore @@ evaluate @@ C.not_ x; *)
   Format.printf "\nTEST4 OK\n%!"
 
 let () =
