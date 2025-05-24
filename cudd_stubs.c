@@ -170,6 +170,10 @@ CAMLprim value caml_cudd_bdd_inspect(value man, value vbdd) {
   } else {
     bdd_t th = Cudd_T(v);
     bdd_t el = Cudd_E(v);
+    if (Cudd_IsConstant(v)){
+      th = Cudd_Not(th);
+      el = Cudd_Not(th);
+    }
     Cudd_Ref(th);
     Cudd_Ref(el);
     int i = Cudd_NodeReadIndex(v);
