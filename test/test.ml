@@ -1,4 +1,4 @@
-[@@@warning "-32"]
+[@@@warning "-32-27-39"]
 
 module C = Cudd.Bdd ()
 
@@ -22,11 +22,11 @@ let test1 () =
     y_or_x;
   Format.printf "\nTEST1 OK\n%!"
 
-let rec evaluate bdd =
-  match C.inspect bdd with
-  | C.True -> true
-  | C.False -> false
-  | Ifte (_, x, y) -> evaluate x && evaluate y
+let rec evaluate bdd = assert false
+(* match C.inspect bdd with *)
+(* | C.True -> true *)
+(* | C.False -> false *)
+(* | Ifte (_, x, y) -> evaluate x && evaluate y *)
 
 let test2 () =
   let x = C.var 0 in

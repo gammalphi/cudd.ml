@@ -1,9 +1,10 @@
-[@@@warnings "-27"]
+[@@@warning "-27-32-20"]
 
 type man
 type bdd
 
 external init : unit -> man = "caml_cudd_init"
+
 (* external quit : man -> unit = "caml_cudd_quit" *)
 external bdd_true : man -> bdd = "caml_cudd_bdd_true"
 external bdd_false : man -> bdd = "caml_cudd_bdd_false"
@@ -16,9 +17,7 @@ external bdd_not : man -> bdd -> bdd = "caml_cudd_bdd_not"
 external bdd_is_equal : bdd -> bdd -> bool = "caml_cudd_bdd_is_equal"
 [@@noalloc]
 
-external bdd_leq : man -> bdd -> bdd -> bool = "caml_cudd_bdd_not" [@@noalloc]
-(* external bdd_is_included_in : bdd -> bdd -> bool = "caml_cudd_bdd_leq" *)
-(* external bdd_print : man -> bdd -> unit = "caml_cudd_bdd_print" *)
+external bdd_leq : man -> bdd -> bdd -> bool = "caml_cudd_bdd_leq" [@@noalloc]
 
 module Bdd () = struct
   type t = bdd
@@ -27,7 +26,6 @@ module Bdd () = struct
   external bdd_inspect : man -> bdd -> result = "caml_cudd_bdd_inspect"
 
   let man = init ()
-  (* let quit () = quit man *)
   let true_ () = bdd_true man
   let false_ () = bdd_false man
   let not_ = bdd_not man
