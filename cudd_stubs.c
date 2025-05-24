@@ -43,13 +43,6 @@ static struct custom_operations manager_ops = {
     custom_serialize_default,
     custom_deserialize_default
 };
-
-static value alloc_manager(manager_t m) {
-  value v = caml_alloc_custom(&manager_ops, sizeof(struct manager_wrapper), 0, 1);
-  ((struct manager_wrapper *)Data_custom_val(v))->manager = m;
-  return v;
-}
-
 static void bdd_finalize(value v) {
   struct bdd_wrapper *w = Bddwrapper_val(v);
   if (w->ptr != NULL) {
@@ -67,13 +60,31 @@ static struct custom_operations bdd_ops = {
     custom_deserialize_default
 };
 
+///////////////////////////////////////////////////
+
+
+static value alloc_manager(manager_t m) {
+  CAMLparam0();
+  CAMLlocal1(v);
+  v = caml_alloc_custom(&manager_ops, sizeof(struct manager_wrapper), 0, 1);
+  ((struct manager_wrapper *)Data_custom_val(v))->manager = m;
+  CAMLreturn(v);
+}
+
+
+
 static value alloc_bdd(manager_t manager, bdd_t node) {
-  value block = caml_alloc_custom(&bdd_ops, sizeof(struct bdd_wrapper), 0, 1);
+  CAMLparam0();
+  CAMLlocal1(block);
+  block = caml_alloc_custom(&bdd_ops, sizeof(struct bdd_wrapper), 0, 1);
   struct bdd_wrapper *w = Bddwrapper_val(block);
   w->ptr = node;
   w->manager = manager;
-  return block;
+  CAMLreturn(block);
 }
+
+
+///////////////////////////////////////////////////
 
 CAMLprim value caml_cudd_init(value unit) {
   CAMLparam1(unit);
