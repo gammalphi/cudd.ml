@@ -4,7 +4,7 @@ module Bdd () : sig
   type result = False | True | Ifte of int * bdd * bdd
 
   (* val init : unit -> unit *)
-  val quit : unit -> unit
+  (* val quit : unit -> unit *)
   val true_ : unit -> bdd
   val false_ : unit -> bdd
   val not_ : bdd -> bdd

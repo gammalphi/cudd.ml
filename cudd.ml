@@ -4,7 +4,7 @@ type man
 type bdd
 
 external init : unit -> man = "caml_cudd_init"
-external quit : man -> unit = "caml_cudd_quit"
+(* external quit : man -> unit = "caml_cudd_quit" *)
 external bdd_true : man -> bdd = "caml_cudd_bdd_true"
 external bdd_false : man -> bdd = "caml_cudd_bdd_false"
 external bdd_var : man -> int -> bdd = "caml_cudd_bdd_var"
@@ -27,7 +27,7 @@ module Bdd () = struct
   external bdd_inspect : man -> bdd -> result = "caml_cudd_bdd_inspect"
 
   let man = init ()
-  let quit () = quit man
+  (* let quit () = quit man *)
   let true_ () = bdd_true man
   let false_ () = bdd_false man
   let not_ = bdd_not man
@@ -52,5 +52,5 @@ module Bdd () = struct
         Format.fprintf fmt "ITE(@[<hv>%a;@,%a;@,%a)@])" print_id x
           (print print_id) b1 (print print_id) b2
 
-  let () = at_exit quit
+  (* let () = at_exit quit *)
 end
