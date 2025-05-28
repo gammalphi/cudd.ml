@@ -1,0 +1,11 @@
+(library
+ (name cudd)
+ (public_name cudd)
+ (foreign_stubs
+  (language c)
+  (names cudd_stubs)
+  (flags
+   (:standard -Wall))
+  (include_dirs cudd))
+ (foreign_archives cudd/cudd)
+ (libraries unix))

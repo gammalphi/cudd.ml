@@ -1,0 +1,26 @@
+;; If installed with opam, this file will already be here. 
+
+(rule
+ (targets cudd.tar.gz)
+ (mode fallback)
+ (action
+  (bash
+   "curl -L https://github.com/ivmai/cudd/archive/refs/tags/cudd-3.0.0.tar.gz -o cudd.tar.gz")))
+
+(rule
+ (targets cudd.h libcudd.a dllcudd.so)
+ (deps cudd.tar.gz)
+ (action
+  (progn
+   (bash "rm -rf unpacked-cudd && mkdir unpacked-cudd")
+   (bash "tar -xf cudd.tar.gz --strip-components=1 -C unpacked-cudd")
+   (bash "cp unpacked-cudd/cudd/cudd.h cudd.h")
+   (chdir
+    unpacked-cudd
+    (bash
+     "CFLAGS=\"-O3 -fPIC\" CXXFLAGS=\"-O3 -fPIC\" ./configure --enable-obj --enable-shared --disable-dependency-tracking --disable-dddmp"))
+   (chdir
+    unpacked-cudd
+    (bash "make -j 4 cudd/libcudd.la"))
+   (bash "cp unpacked-cudd/cudd/.libs/libcudd.a libcudd.a")
+   (bash "cp unpacked-cudd/cudd/.libs/libcudd.so dllcudd.so"))))
