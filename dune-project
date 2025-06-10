@@ -27,11 +27,21 @@
 
 (generate_opam_files true)
 
+(license "LGPL-2.1-only")
+
+(homepage "https://git.frama-c.com/pub/codex/cudd.ml")
+
+(bug_reports "https://git.frama-c.com/pub/codex/cudd.ml/-/issues")
+
+(authors
+ "Matthieu Lemerre <matthieu.lemerre@cea.fr>"
+ "Paul Robert <paul.robert@cea.fr>")
+
 (maintainers
  "Matthieu Lemerre <matthieu.lemerre@cea.fr>"
- "Paul Robert <paul.robert@cea.fr")
+ "Paul Robert <paul.robert@cea.fr>")
 
 
 (package
  (name cudd)
- (synopsis "minimal cudd bindings"))
+ (synopsis "Minimal cudd bindings"))
