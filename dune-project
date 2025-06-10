@@ -1,4 +1,5 @@
 (lang dune 3.6)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;  This file is part of the Codex semantics library.                     ;;
 ;;                                                                        ;;
@@ -20,19 +21,19 @@
 ;;                                                                        ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-
-
 (name cudd)
 
 (using directory-targets 0.1)
 
 (generate_opam_files true)
 
-(maintainers "Matthieu Lemerre <matthieu.lemerre@cea.fr>"
-"Paul Robert <paul.robert@cea.fr")
+(maintainers
+ "Matthieu Lemerre <matthieu.lemerre@cea.fr>"
+ "Paul Robert <paul.robert@cea.fr")
 
+(source
+ (uri https://git.frama-c.com/pub/codex/cudd.ml.git))
 
 (package
  (name cudd)
- (synopsis "minimal cudd bindings")
- (allow_empty))
+ (synopsis "minimal cudd bindings"))
