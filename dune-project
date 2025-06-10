@@ -31,8 +31,6 @@
  "Matthieu Lemerre <matthieu.lemerre@cea.fr>"
  "Paul Robert <paul.robert@cea.fr")
 
-(source
- (uri https://git.frama-c.com/pub/codex/cudd.ml.git))
 
 (package
  (name cudd)

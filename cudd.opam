@@ -23,7 +23,6 @@ build: [
     "@doc" {with-doc}
   ]
 ]
-dev-repo: "https://git.frama-c.com/pub/codex/cudd.ml.git"
 ############################################################################
 ##  This file is part of the Codex semantics library.                     ##
 ##                                                                        ##
