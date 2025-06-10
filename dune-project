@@ -44,4 +44,6 @@
 
 (package
  (name cudd)
- (synopsis "Minimal cudd bindings"))
+ (synopsis "Minimal cudd bindings")
+ )
+

@@ -63,4 +63,4 @@ extra-source "cudd/cudd.tar.gz" {
   ]
 }
 
-
+available: [os="linux"]
