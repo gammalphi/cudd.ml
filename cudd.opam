@@ -64,3 +64,4 @@ extra-source "cudd/cudd.tar.gz" {
 }
 
 available: [os="linux"]
+available: os-family != "windows"
