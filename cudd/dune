@@ -54,11 +54,12 @@
 
 
 (rule
- (enabled_if 
-   (or 
-   (= %{system} "Linux")
-   (= %{system} "linux")
-   ))
+  (enabled_if 
+   not ((or 
+   (= %{system} "Darwin")
+   (= %{system} "darwin")
+   (= %{system} "macosx")
+   )))
  (targets cudd.h libcudd.a dllcudd.so)
  (deps cudd.tar.gz)
  (action
