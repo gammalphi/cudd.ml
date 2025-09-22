@@ -31,4 +31,4 @@ extra-source "cudd/cudd.tar.gz" {
   ]
 }
 
-available: [os="linux" & os-family != "windows" & arch != "riscv64"]
+available: [os-family != "windows" & arch != "riscv64"]
