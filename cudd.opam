@@ -13,7 +13,7 @@ license: "LGPL-2.1-only"
 homepage: "https://git.frama-c.com/pub/codex/cudd.ml"
 bug-reports: "https://git.frama-c.com/pub/codex/cudd.ml/-/issues"
 depends: [
-  "dune" {>= "3.6"}
+  "dune" {>= "3.18"}
   "odoc" {with-doc}
 ]
 build: [
@@ -30,6 +30,7 @@ build: [
     "@doc" {with-doc}
   ]
 ]
+x-maintenance-intent: ["(latest)"]
 ############################################################################
 ##  This file is part of the Codex semantics library.                     ##
 ##                                                                        ##

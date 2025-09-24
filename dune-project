@@ -1,4 +1,4 @@
-(lang dune 3.6)
+(lang dune 3.18)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;  This file is part of the Codex semantics library.                     ;;
@@ -45,5 +45,6 @@
 (package
  (name cudd)
  (synopsis "Minimal cudd bindings")
+ (maintenance_intent "(latest)")
  )
 
