@@ -38,6 +38,14 @@ module Bdd () : sig
   val var : int -> bdd
   val newvar : unit -> bdd
   val is_equal : bdd -> bdd -> bool
+
+  val compare : bdd -> bdd -> int
+  (** Total order on the BDDs of the manager (node addresses: not stable
+      across runs). *)
+
+  val hash : bdd -> int
+  (** Compatible with [is_equal]; [Hashtbl.hash] also is. *)
+
   val is_false : bdd -> bool
   val is_true : bdd -> bool
   val is_inter_empty : bdd -> bdd -> bool

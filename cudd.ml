@@ -37,6 +37,9 @@ external bdd_not : man -> bdd -> bdd = "caml_cudd_bdd_not"
 external bdd_is_equal : bdd -> bdd -> bool = "caml_cudd_bdd_is_equal"
 [@@noalloc]
 
+external bdd_compare : bdd -> bdd -> int = "caml_cudd_bdd_compare" [@@noalloc]
+external bdd_hash : bdd -> int = "caml_cudd_bdd_hash" [@@noalloc]
+
 external bdd_leq : man -> bdd -> bdd -> bool = "caml_cudd_bdd_leq" [@@noalloc]
 
 module Bdd () = struct
@@ -54,6 +57,8 @@ module Bdd () = struct
   let var = bdd_var man
   let newvar () = bdd_newvar man
   let is_equal = bdd_is_equal
+  let compare = bdd_compare
+  let hash = bdd_hash
   let is_included_in = bdd_leq man
   let inspect = bdd_inspect man
 
