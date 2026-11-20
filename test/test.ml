@@ -72,9 +72,21 @@ let test4 () =
   (* ignore @@ evaluate @@ C.not_ x; *)
   Format.printf "\nTEST4 OK\n%!"
 
+(* BDDs as keys of the polymorphic Hashtbl: needs a hash that tells
+   BDDs apart and a compare on the custom block. *)
+let test5 () =
+  let l = List.init 1000 C.var in
+  let hashes = List.sort_uniq Int.compare (List.map Hashtbl.hash l) in
+  assert (List.length hashes > 900);
+  let h = Hashtbl.create 17 in
+  List.iteri (fun i x -> Hashtbl.replace h x i) l;
+  List.iteri (fun i x -> assert (Hashtbl.find h (C.not_ (C.not_ x)) = i)) l;
+  Format.printf "\nTEST5 OK\n%!"
+
 let () =
   test1 ();
   test2 ();
   test3 ();
   test4 ();
+  test5 ();
   Printf.printf "All tests done.\n"
