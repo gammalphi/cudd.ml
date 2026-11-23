@@ -19,6 +19,7 @@
 /*                                                                        */
 /**************************************************************************/
 
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <cudd.h>
@@ -72,11 +73,35 @@ static void bdd_finalize(value v) {
   }
 }
 
+/* BDDs are hash-consed by CUDD: two BDDs of a manager are equal iff they
+   are the same node pointer (complement bit included). */
+
+/* The low bits of a node address are constant (alignment): mix them in. */
+static inline intnat bdd_hash(bdd_t b) {
+  uint64_t h = (uint64_t)(uintptr_t)b;
+  h ^= h >> 30;
+  h *= 0xbf58476d1ce4e5b9ULL;
+  h ^= h >> 27;
+  h *= 0x94d049bb133111ebULL;
+  h ^= h >> 31;
+  return (intnat)h;
+}
+
+static inline int bdd_compare(bdd_t b1, bdd_t b2) {
+  return (b1 > b2) - (b1 < b2);
+}
+
+static int bdd_custom_compare(value v1, value v2) {
+  return bdd_compare(Bdd_val(v1), Bdd_val(v2));
+}
+
+static intnat bdd_custom_hash(value v) { return bdd_hash(Bdd_val(v)); }
+
 static struct custom_operations bdd_ops = {
     "cudd.bdd",
     bdd_finalize,
-    custom_compare_default,
-    custom_hash_default,
+    bdd_custom_compare,
+    bdd_custom_hash,
     custom_serialize_default,
     custom_deserialize_default
 };
@@ -169,9 +194,17 @@ CAMLprim value caml_cudd_bdd_not(value man, value vbdd) {
   CAMLreturn(alloc_bdd(manager, res));
 }
 
+/* The following are [@@noalloc]. */
 CAMLprim value caml_cudd_bdd_is_equal(value vbdd1, value vbdd2) {
-  CAMLparam2(vbdd1, vbdd2);
-  CAMLreturn(Val_bool(Bdd_val(vbdd1) == Bdd_val(vbdd2)));
+  return Val_bool(Bdd_val(vbdd1) == Bdd_val(vbdd2));
+}
+
+CAMLprim value caml_cudd_bdd_compare(value vbdd1, value vbdd2) {
+  return Val_int(bdd_compare(Bdd_val(vbdd1), Bdd_val(vbdd2)));
+}
+
+CAMLprim value caml_cudd_bdd_hash(value vbdd) {
+  return Val_long(bdd_hash(Bdd_val(vbdd)));
 }
 
 CAMLprim value caml_cudd_bdd_leq(value man, value vbdd1, value vbdd2) {
