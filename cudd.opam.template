@@ -21,7 +21,6 @@
 
 
 
-dev-repo: "git+https://git.frama-c.com/pub/codex/cudd.ml.git"
 extra-source "cudd/cudd.tar.gz" {
   src:
     "https://github.com/ivmai/cudd/archive/refs/tags/cudd-3.0.0.tar.gz"

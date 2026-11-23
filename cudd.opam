@@ -10,8 +10,8 @@ authors: [
   "Paul Robert <paul.robert@cea.fr>"
 ]
 license: "LGPL-2.1-only"
-homepage: "https://git.frama-c.com/pub/codex/cudd.ml"
-bug-reports: "https://git.frama-c.com/pub/codex/cudd.ml/-/issues"
+homepage: "https://github.com/gammalphi/cudd.ml"
+bug-reports: "https://github.com/gammalphi/cudd.ml/issues"
 depends: [
   "dune" {>= "3.18"}
   "odoc" {with-doc}
@@ -54,7 +54,6 @@ x-maintenance-intent: ["(latest)"]
 
 
 
-dev-repo: "git+https://git.frama-c.com/pub/codex/cudd.ml.git"
 extra-source "cudd/cudd.tar.gz" {
   src:
     "https://github.com/ivmai/cudd/archive/refs/tags/cudd-3.0.0.tar.gz"

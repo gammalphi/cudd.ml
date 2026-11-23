@@ -29,9 +29,9 @@
 
 (license "LGPL-2.1-only")
 
-(homepage "https://git.frama-c.com/pub/codex/cudd.ml")
+(homepage "https://github.com/gammalphi/cudd.ml")
 
-(bug_reports "https://git.frama-c.com/pub/codex/cudd.ml/-/issues")
+(bug_reports "https://github.com/gammalphi/cudd.ml/issues")
 
 (authors
  "Matthieu Lemerre <matthieu.lemerre@cea.fr>"
