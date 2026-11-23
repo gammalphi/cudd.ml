@@ -30,6 +30,7 @@ build: [
     "@doc" {with-doc}
   ]
 ]
+dev-repo: "git+https://github.com/gammalphi/cudd.ml.git"
 x-maintenance-intent: ["(latest)"]
 ############################################################################
 ##  This file is part of the Codex semantics library.                     ##

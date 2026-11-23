@@ -29,9 +29,7 @@
 
 (license "LGPL-2.1-only")
 
-(homepage "https://github.com/gammalphi/cudd.ml")
-
-(bug_reports "https://github.com/gammalphi/cudd.ml/issues")
+(source (github gammalphi/cudd.ml))
 
 (authors
  "Matthieu Lemerre <matthieu.lemerre@cea.fr>"
