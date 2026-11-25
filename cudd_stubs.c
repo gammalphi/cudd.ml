@@ -214,6 +214,11 @@ CAMLprim value caml_cudd_bdd_leq(value man, value vbdd1, value vbdd2) {
   CAMLreturn(Val_bool(res));
 }
 
+CAMLprim value caml_cudd_bdd_is_inter_empty(value man, value vbdd1, value vbdd2) {
+  manager_t manager = Manager_val(man);
+  return Val_bool(Cudd_bddLeq(manager, Bdd_val(vbdd1), Cudd_Not(Bdd_val(vbdd2))));
+}
+
 CAMLprim value caml_cudd_bdd_inspect(value man, value vbdd) {
   CAMLparam2(man, vbdd);
   CAMLlocal3(vres, vthen, velse);

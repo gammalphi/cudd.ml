@@ -89,10 +89,23 @@ let test5 () =
       assert (C.compare x (C.not_ x) <> 0)) l;
   Format.printf "\nTEST5 OK\n%!"
 
+let test6 () =
+  let x = C.newvar () and y = C.newvar () in
+  let xy = C.and_ x y in
+  assert (C.is_inter_empty x (C.not_ x));
+  assert (C.is_inter_empty (C.false_ ()) (C.true_ ()));
+  assert (not @@ C.is_inter_empty x y);
+  assert (not @@ C.is_inter_empty xy x);
+  assert (C.is_inter_empty xy (C.not_ y));
+  assert (C.is_included_in xy x);
+  assert (not @@ C.is_included_in x xy);
+  Format.printf "\nTEST6 OK\n%!"
+
 let () =
   test1 ();
   test2 ();
   test3 ();
   test4 ();
   test5 ();
+  test6 ();
   Printf.printf "All tests done.\n"
