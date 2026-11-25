@@ -41,6 +41,7 @@ external bdd_compare : bdd -> bdd -> int = "caml_cudd_bdd_compare" [@@noalloc]
 external bdd_hash : bdd -> int = "caml_cudd_bdd_hash" [@@noalloc]
 
 external bdd_leq : man -> bdd -> bdd -> bool = "caml_cudd_bdd_leq" [@@noalloc]
+external bdd_is_inter_empty : man -> bdd -> bdd -> bool = "caml_cudd_bdd_is_inter_empty" [@@noalloc]
 
 module Bdd () = struct
   type t = bdd
@@ -65,7 +66,7 @@ module Bdd () = struct
   (*TODO: do this properly*)
   let is_true b = bdd_is_equal b (true_ ())
   let is_false b = bdd_is_equal b (false_ ())
-  let is_inter_empty b1 b2 = is_included_in b1 (not_ b2)
+  let is_inter_empty = bdd_is_inter_empty man
 
   let rec print print_id fmt b =
     match inspect b with
