@@ -101,6 +101,19 @@ let test6 () =
   assert (not @@ C.is_included_in x xy);
   Format.printf "\nTEST6 OK\n%!"
 
+let test7 () =
+  let x = C.newvar () in
+  assert (C.is_true (C.true_ ()));
+  assert (C.is_false (C.false_ ()));
+  assert (C.is_true (C.not_ (C.false_ ())));
+  assert (C.is_false (C.and_ x (C.not_ x)));
+  assert (C.is_true (C.or_ x (C.not_ x)));
+  assert (not @@ C.is_true x);
+  assert (not @@ C.is_false x);
+  assert (not @@ C.is_true (C.false_ ()));
+  assert (not @@ C.is_false (C.true_ ()));
+  Format.printf "\nTEST7 OK\n%!"
+
 let () =
   test1 ();
   test2 ();
@@ -108,4 +121,5 @@ let () =
   test4 ();
   test5 ();
   test6 ();
+  test7 ();
   Printf.printf "All tests done.\n"
